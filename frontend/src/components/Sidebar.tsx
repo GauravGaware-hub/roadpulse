@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Icon, { type IconName } from "../lib/Icon";
 import type { Route } from "../lib/router";
 
@@ -25,6 +26,14 @@ interface Props {
 }
 
 export default function Sidebar({ route, go, open, onClose, api, version }: Props) {
+  // Escape closes the off-canvas sidebar
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
   const item = (n: { route: Route; label: string; icon: IconName }) => (
     <a
       key={n.route}
@@ -44,7 +53,7 @@ export default function Sidebar({ route, go, open, onClose, api, version }: Prop
 
   return (
     <>
-      {open && <div className="scrim" onClick={onClose} aria-hidden />}
+      {open && <div className="scrim nav-scrim" onClick={onClose} aria-hidden />}
       <aside className={`sidebar${open ? " open" : ""}`} aria-label="Primary">
         <div className="brand">
           <span className="brand-mark" aria-hidden>

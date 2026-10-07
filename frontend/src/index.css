@@ -86,12 +86,13 @@ nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .status-dot.online { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
 .status-dot.offline { background: var(--crit); box-shadow: 0 0 8px var(--crit); }
 .scrim { position: fixed; inset: 0; background: rgba(2, 6, 12, 0.6); z-index: 900; }
+.nav-scrim { display: none; }
 
 .topbar {
   position: sticky; top: 0; z-index: 500; display: flex; align-items: center; gap: 12px;
   padding: 10px 24px; background: rgba(11, 15, 23, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
 }
-.menu-btn { display: none; }
+.icon-btn.menu-btn { display: none; }
 .crumb { display: flex; gap: 8px; align-items: center; font-size: 14px; white-space: nowrap; }
 .crumb-root { color: var(--blue); }
 .topbar-dataset { flex: 1; min-width: 0; display: flex; justify-content: center; }
@@ -180,7 +181,8 @@ input[type="checkbox"] { accent-color: var(--cyan); width: 15px; height: 15px; }
 /* ---------- map ---------- */
 .map-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .map-card .card-head { padding: 12px 16px 0; }
-.map-wrap { position: relative; height: 380px; background: var(--canvas); }
+/* isolation: Leaflet panes/controls use z-index up to 1000; keep them inside the map so they can never paint above the sidebar, scrim or drawer */
+.map-wrap { position: relative; isolation: isolate; height: 380px; background: var(--canvas); }
 .map-wrap.compact { height: 340px; }
 .grid-main .map-wrap.compact { height: auto; flex: 1 1 auto; min-height: 340px; }
 .map-card.tall .map-wrap { height: clamp(520px, calc(100vh - 340px), 760px); }
@@ -372,9 +374,11 @@ table.compact td, table.compact th { padding: 7px 8px; }
 }
 @media (max-width: 1100px) {
   .shell { grid-template-columns: minmax(0, 1fr); }
-  .sidebar { position: fixed; z-index: 1000; left: 0; top: 0; width: 272px; transform: translateX(-100%); transition: transform .2s ease; }
-  .sidebar.open { transform: none; }
-  .menu-btn { display: inline-grid; }
+  /* Off-canvas drawer: scrim (900) sits above the page, sidebar (1000) above the scrim */
+  .nav-scrim { display: block; }
+  .sidebar { position: fixed; z-index: 1000; left: 0; top: 0; width: 272px; transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility 0s linear .2s; }
+  .sidebar.open { transform: none; visibility: visible; transition: transform .2s ease, visibility 0s; }
+  .icon-btn.menu-btn { display: inline-grid; }
   .topbar { padding: 10px 14px; }
   .page { padding: 16px 14px 28px; }
   .grid-main, .grid-map, .grid-hotspots, .grid-demo, .explain, .hero { grid-template-columns: minmax(0, 1fr); }

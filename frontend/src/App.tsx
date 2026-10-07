@@ -32,6 +32,13 @@ const readDark = () => {
 export default function App() {
   const [route, go] = useRoute();
   const [navOpen, setNavOpen] = useState(false);
+  // The sidebar is permanently visible above 1100px: drop any open state when the window grows past it
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1101px)");
+    const onChange = () => mq.matches && setNavOpen(false);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   // null = static Pune research dataset; otherwise an uploaded recording's UUID
   const [recordingId, setRecordingId] = useState<string | null>(null);
