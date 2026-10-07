@@ -1,0 +1,5 @@
+# Uploaded sensor recordings (privacy: never commit)
+uploads/*
+!uploads/.gitkeep
+__pycache__/
+*.pyc

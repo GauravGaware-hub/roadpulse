@@ -1,0 +1,63 @@
+# ===== Raw sensor recordings & datasets (private / very large) =====
+# Original Sensor Logger recordings (contain GPS tracks and a device id)
+/MRXF_CJV-2026-10-06_05-11-28/
+/Vakratund_Colony-2026-10-06_12-32-23/
+# Any future Sensor Logger export folder: <name>-YYYY-MM-DD_HH-MM-SS/
+/*-20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]_[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+# Raw research datasets (~1 GB total)
+/GIS/
+/Combined CSV with GIS and Weather Data/
+/Isolated Data/
+/python
+
+# ===== Uploaded recordings (user data) =====
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ===== Large research artifacts NOT used by the deployed backend =====
+# The API reads only processed/roadpulse_pune_impact_scores.csv and
+# processed/roadpulse_pune_impact_clusters.csv. These are regenerable / kept locally.
+# Re-add deliberately with `git add -f` if you want them in the repo.
+backend/processed/roadpulse_pune_recording.csv
+backend/processed/roadpulse_stage1_features.csv
+backend/processed/roadpulse_features.csv
+backend/model/*.joblib
+
+# Design reference only (kept locally, not part of the app)
+stitch_roadpulse_road_health_intelligence_platform/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+
+# ===== Node / frontend build =====
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+
+# ===== Local environment files (keep the *.example templates) =====
+.env
+.env.*
+!.env.example
+
+# ===== Logs, temp, scratch =====
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+scratch/
+scratchpad/
+
+# ===== OS / editor / tooling =====
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.claude/

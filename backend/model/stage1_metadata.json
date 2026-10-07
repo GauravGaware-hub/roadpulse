@@ -1,0 +1,15 @@
+{
+  "model_type": "RandomForestClassifier",
+  "stage": "stage1",
+  "task": "NORMAL vs ANOMALY",
+  "random_state": 42,
+  "test_size": 0.2,
+  "total_windows": 8956,
+  "training_windows": 7393,
+  "testing_windows": 1563,
+  "training_recordings": 80,
+  "testing_recordings": 21,
+  "feature_count": 78,
+  "accuracy": 0.6321177223288548,
+  "macro_f1": 0.6043600623884859
+}

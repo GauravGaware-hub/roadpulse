@@ -1,0 +1,20 @@
+{
+  "model": "RandomForestClassifier",
+  "n_estimators": 250,
+  "max_depth": 20,
+  "class_weight": "balanced",
+  "random_state": 42,
+  "dataset_windows": 6059,
+  "train_windows": 4948,
+  "test_windows": 1111,
+  "train_recordings": 80,
+  "test_recordings": 21,
+  "feature_count": 78,
+  "accuracy": 0.47974797479747977,
+  "macro_f1": 0.3777464171464799,
+  "classes": [
+    "NORMAL",
+    "BUMP",
+    "POTHOLE"
+  ]
+}
