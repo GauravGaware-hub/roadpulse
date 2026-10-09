@@ -401,3 +401,16 @@ table.compact td, table.compact th { padding: 7px 8px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* ---------- upload reliability ---------- */
+.slot.bad { border-color: var(--crit); }
+.slot-msg { font-size: 12px; line-height: 1.35; }
+.slot-msg.error { color: #fca5a5; }
+.slot-msg.warn { color: #fcd34d; }
+.notice-warn { border: 1px solid var(--amber); background: rgba(245, 158, 11, 0.08); color: #fcd34d; border-radius: var(--r-md); padding: 8px 12px; font-size: 13px; margin: 8px 0; }
+.failure { border-color: rgba(239, 68, 68, 0.55); }
+.failure.ambiguous { border-color: var(--amber); }
+.failure .eyebrow { color: #fca5a5; }
+.failure.ambiguous .eyebrow { color: #fcd34d; }
+.recent { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.recent li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 12px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--canvas); }

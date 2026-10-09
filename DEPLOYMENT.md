@@ -41,3 +41,19 @@ plus `result.json`). This is acceptable for a first prototype deployment only:
 Use a single instance and a persistent disk (`UPLOADS_DIR`) if recordings must survive restarts. Object storage
 or a database is the proper fix and is not implemented yet.
 The static Pune dataset ships with the backend (`backend/processed/*.csv`) and is unaffected.
+
+## Reliability notes (event-day)
+- **Cold start:** the free Render server sleeps when idle; the first request was measured at ~43 s. The app shows
+  "waking up the server" feedback, retries only harmless GET requests, and checks `/api/health` before an upload.
+  **Open the site and the API URL a few minutes before presenting** so the server is awake.
+- **Uploads are never retried automatically.** Each file selection carries an `X-Upload-Key`; the backend returns the
+  original recording if the same key arrives again (explicit "Upload again", or a browser re-sending after a dropped
+  connection), so a retry cannot create a duplicate. The key map is in memory, so it resets if the server restarts.
+- **Recent recordings** are remembered in the browser only; a recording whose server copy was cleared by a restart
+  shows an explanatory message and the baseline dataset stays available.
+- **Measured:** a 25 MB / 134k-row recording processes in ~37 s on Render (upload included); peak server memory ~210 MB locally.
+  Only one recording is processed at a time (a lock), so simultaneous uploads queue instead of exhausting memory.
+
+## Tests
+    cd backend && pip install pytest httpx && python -m pytest tests -q
+(The real-recording test skips itself when the git-ignored recording folder is absent.)

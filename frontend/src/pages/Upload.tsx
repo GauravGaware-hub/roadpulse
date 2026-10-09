@@ -10,7 +10,7 @@ export default function Upload({ ctx }: { ctx: PageCtx }) {
         title="Sensor Upload"
         subtitle="Upload one Sensor Logger recording. RoadPulse synchronises the sensors, detects motion events, scores them and clusters repeated locations."
       />
-      <UploadPanel onViewResults={ctx.switchDataset} onBack={() => ctx.go("overview")} notify={ctx.notify} />
+      <UploadPanel recordingId={ctx.recordingId} onViewResults={ctx.switchDataset} onUseBaseline={() => ctx.switchDataset(null)} onBack={() => ctx.go("overview")} notify={ctx.notify} />
     </div>
   );
 }

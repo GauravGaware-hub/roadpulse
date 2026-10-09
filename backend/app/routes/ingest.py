@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, File, HTTPException, Query, UploadFile
+from fastapi import APIRouter, File, Header, HTTPException, Query, UploadFile
 
 from app.routes.events import call_service
 from app.schemas import EventList, HotspotList, IngestResult, Stats
@@ -17,6 +17,7 @@ def ingest(
     location: Optional[UploadFile] = File(None, description="Location.csv (required)"),
     total_acceleration: Optional[UploadFile] = File(None, description="TotalAcceleration.csv (optional)"),
     metadata: Optional[UploadFile] = File(None, description="Metadata.csv (optional)"),
+    x_upload_key: Optional[str] = Header(None, description="Optional idempotency key: a repeated key returns the original recording instead of creating a duplicate"),
 ):
     """Upload a Sensor Logger recording and process it synchronously."""
     try:
@@ -26,7 +27,7 @@ def ingest(
             "location": location,
             "total_acceleration": total_acceleration,
             "metadata": metadata,
-        })
+        }, x_upload_key)
     except ing.IngestError as exc:
         raise HTTPException(exc.status_code, exc.message)
 
